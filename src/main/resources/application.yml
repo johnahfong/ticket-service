@@ -1,0 +1,9 @@
+ticket:
+  price:
+    adult: 25
+    teen: 12
+    children: 5
+  discount:
+    senior-percent: 30
+    children-percent: 25
+    children-min-quantity: 3

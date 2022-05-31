@@ -28,6 +28,7 @@ ext {
 
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation("org.springdoc:springdoc-openapi-ui:${springdocVersion}")
 
 	compileOnly 'org.projectlombok:lombok'
@@ -44,20 +45,21 @@ checkstyle {
 	configFile file("${rootDir}/checkstyle.xml")
 	showViolations = true
 	ignoreFailures = false
+	maxWarnings = 0
 }
 checkstyleMain { source = 'src/main/java' }
 checkstyleTest.onlyIf { false }
+
+test {
+	finalizedBy jacocoTestReport
+}
 
 jacoco {
 	toolVersion = "${jacocoVersion}"
 }
 
 jacocoTestReport {
-	reports {
-		xml.required = false
-		csv.required = false
-		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
-	}
+	dependsOn test // tests are required to run before generating the report
 }
 
 jacocoTestCoverageVerification {
@@ -76,4 +78,14 @@ jacocoTestCoverageVerification {
 			}
 		}
 	}
+
+	afterEvaluate {
+		classDirectories.setFrom(files(classDirectories.files.collect {
+			fileTree(dir: it, exclude: [
+					"au/jahfong/ticketservice/TicketServiceApplication.class"
+			])
+		}))
+	}
 }
+
+check.dependsOn jacocoTestCoverageVerification

@@ -7,10 +7,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Entry point of the application.
  */
 @SpringBootApplication
-public class TicketserviceApplication {
+public class TicketServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TicketserviceApplication.class, args);
+        SpringApplication.run(TicketServiceApplication.class, args);
     }
 
 }
