@@ -2,6 +2,8 @@ plugins {
 	id 'org.springframework.boot' version '2.6.8'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id("checkstyle")
+	id("jacoco")
 }
 
 group = 'au.jahfong'
@@ -18,8 +20,16 @@ repositories {
 	mavenCentral()
 }
 
+ext {
+	springdocVersion = '1.6.8'
+	jacocoVersion = '0.8.6'
+	checkStyleVersion = '10.2'
+}
+
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation("org.springdoc:springdoc-openapi-ui:${springdocVersion}")
+
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
@@ -27,4 +37,43 @@ dependencies {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+checkstyle {
+	toolVersion = "${checkStyleVersion}"
+	configFile file("${rootDir}/checkstyle.xml")
+	showViolations = true
+	ignoreFailures = false
+}
+checkstyleMain { source = 'src/main/java' }
+checkstyleTest.onlyIf { false }
+
+jacoco {
+	toolVersion = "${jacocoVersion}"
+}
+
+jacocoTestReport {
+	reports {
+		xml.required = false
+		csv.required = false
+		html.outputLocation = layout.buildDirectory.dir('jacocoHtml')
+	}
+}
+
+jacocoTestCoverageVerification {
+	violationRules {
+		rule {
+			enabled(true)
+			limit {
+				counter = 'INSTRUCTION'
+				value = 'COVEREDRATIO'
+				minimum = 0.8
+			}
+			limit {
+				counter = 'BRANCH'
+				value = 'COVEREDRATIO'
+				minimum = 0.8
+			}
+		}
+	}
 }
