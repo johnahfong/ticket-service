@@ -13,15 +13,16 @@ class TransactionResponseTest {
     @Test
     void testMarshalling() throws Exception {
         TransactionResponse.Ticket ticket =
-            new TransactionResponse.Ticket(MovieTicketType.ADULT, 1, new BigDecimal(10.2333));
+            new TransactionResponse.Ticket(MovieTicketType.ADULT, 1, new BigDecimal(10.2));
 
         TransactionResponse response =
-            new TransactionResponse(1, Arrays.asList(ticket), new BigDecimal(10.2333));
+            new TransactionResponse(1, Arrays.asList(ticket), new BigDecimal(10.2));
 
         String marshalled = objectMapper.writeValueAsString(response);
+        System.out.println(marshalled);
         assertEquals("{\""
                 + "transactionId\":1,\""
-                + "tickets\":[{\"ticketType\":\"Adult\",\"quantity\":1,\"cost\":\"10.23\"}],"
-                + "\"totalCost\":\"10.23\"}", marshalled);
+                + "tickets\":[{\"ticketType\":\"Adult\",\"quantity\":1,\"cost\":10.20}],"
+                + "\"totalCost\":10.20}", marshalled);
     }
 }

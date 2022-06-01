@@ -3,8 +3,10 @@ package au.jahfong.ticketservice.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import au.jahfong.ticketservice.exception.GlobalControllerExceptionHandler;
 import au.jahfong.ticketservice.model.MovieTicketType;
 import au.jahfong.ticketservice.model.TransactionResponse;
 import au.jahfong.ticketservice.service.TransactionService;
@@ -19,12 +21,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(TransactionController.class)
 @ExtendWith(MockitoExtension.class)
+@ContextConfiguration(
+    classes = {
+        GlobalControllerExceptionHandler.class, TransactionController.class
+    }
+)
 class TransactionControllerTest {
 
     @MockBean
@@ -68,6 +76,12 @@ class TransactionControllerTest {
             )
             .andDo(print())
             .andExpect(status().isBadRequest())
+            .andExpectAll(
+                jsonPath("$.type").value("VALIDATION_FAILED"),
+                jsonPath("$.message").value("Validation Failed"),
+                jsonPath("$.violations.length()").value(1),
+                jsonPath("$.violations[0].field").value("transactionId"),
+                jsonPath("$.violations[0].message").value("must not be null"))
             .andReturn();
     }
 

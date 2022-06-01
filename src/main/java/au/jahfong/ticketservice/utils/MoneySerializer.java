@@ -16,9 +16,10 @@ public class MoneySerializer extends JsonSerializer<BigDecimal> {
     public void serialize(BigDecimal value, JsonGenerator gen, SerializerProvider serializers)
         throws IOException {
         if (value != null) {
-            gen.writeString(value.setScale(2, RoundingMode.HALF_UP) + "");
+            BigDecimal formatted = value.setScale(2, RoundingMode.HALF_UP);
+            gen.writeNumber(formatted);
         } else {
-            gen.writeString(value + "");
+            gen.writeNumber(value);
         }
     }
 }

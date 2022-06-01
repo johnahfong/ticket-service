@@ -27,7 +27,7 @@ public class TransactionController {
     private final TransactionService transactionService;
 
     /**
-     * Get a ticket transaction.
+     * Post a ticket transaction.
      *
      * @param request the transaction request
      * @return the transaction response
@@ -37,9 +37,9 @@ public class TransactionController {
         @ApiResponse(responseCode = "400", description = "Bad Request")
     })
     @PostMapping(value = "/transaction", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public TransactionResponse getTransaction(
+    public TransactionResponse postTransaction(
         @RequestBody @Valid TransactionRequest request) {
-        log.debug("get transaction for id: {}", request.getTransactionId());
+        log.debug("post transaction with id: {}", request.getTransactionId());
         return transactionService.getTransaction(request);
     }
 }

@@ -1,0 +1,113 @@
+{
+	"variables": [],
+	"info": {
+		"name": "TicketService",
+		"_postman_id": "b3ccfc3a-7ae8-0229-69b5-88ff6b739244",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "verify_sample_one",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"should have status code 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/api/transaction",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"transactionId\":1,\n   \"customers\":[\n      {\n         \"name\":\"John Smith\",\n         \"age\":70\n      },\n      {\n         \"name\":\"Jane Doe\",\n         \"age\":5\n      },\n      {\n         \"name\":\"Bob Doe\",\n         \"age\":6\n      }\n   ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "verify_sample_two",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"should have status code 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/api/transaction",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"transactionId\":1,\n   \"customers\":[\n      {\n         \"name\":\"John Smith\",\n         \"age\":70\n      },\n      {\n         \"name\":\"Jane Doe\",\n         \"age\":5\n      },\n      {\n         \"name\":\"Bob Doe\",\n         \"age\":6\n      }\n   ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "verify_sample_three",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							"pm.test(\"should have status code 200\", function () {",
+							"  pm.response.to.have.status(200);",
+							"});",
+							""
+						]
+					}
+				}
+			],
+			"request": {
+				"url": "http://localhost:8080/api/transaction",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n   \"transactionId\":3,\n   \"customers\":[\n      {\n         \"name\":\"Jesse James\",\n         \"age\":36\n      },\n      {\n         \"name\":\"Daniel Anderson\",\n         \"age\":95\n      },\n      {\n         \"name\":\"Mary Jones\",\n         \"age\":15\n      },\n      {\n         \"name\":\"Michelle Parker\",\n         \"age\":10\n      }\n   ]\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

@@ -41,13 +41,6 @@ class TransactionServiceTest {
         assertEquals(25, transaction.getTotalCost().doubleValue());
     }
 
-    private TransactionRequest givenTransactionRequest(TransactionRequest.Customer... customers) {
-        TransactionRequest request = new TransactionRequest();
-        request.setTransactionId(1);
-        request.setCustomers(Arrays.asList(customers));
-        return request;
-    }
-
     @Test
     void should_handle_multiple_customers() {
         TransactionRequest request = givenTransactionRequest(SENIOR_CUSTOMER, CHILD_CUSTOMER,
@@ -74,6 +67,13 @@ class TransactionServiceTest {
         assertEquals(12, transaction.getTickets().get(3).getCost().doubleValue());
 
         assertEquals(65.75, transaction.getTotalCost().doubleValue());
+    }
+
+    private TransactionRequest givenTransactionRequest(TransactionRequest.Customer... customers) {
+        TransactionRequest request = new TransactionRequest();
+        request.setTransactionId(1);
+        request.setCustomers(Arrays.asList(customers));
+        return request;
     }
 
     private TicketConfiguration givenConfig() {
